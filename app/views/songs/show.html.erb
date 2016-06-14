@@ -1,0 +1,10 @@
+<a href='/songs'>Back to song list</a>
+<div class="@song">
+  <h1><%= @song.title %> </h1>
+  <h6> By: <%= @song.author %> </h6>
+  <% if @song.url %>
+    <a href="<%= @song.url %>">Listen now online</a>
+  <% else %>
+    <span>No link given for <%= @song.title %>, sorry</span>
+  <% end %>
+</div>

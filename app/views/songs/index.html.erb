@@ -1,0 +1,13 @@
+<a href="/">Go home</a>
+
+<% @songs.each do |song| %>
+  <div class="song">
+    <h1><a href="/songs/<%= song.id %>"><%= song.title %></a></h1>
+    <h6> By: <%= song.author %> </h6>
+    <% if song.url %>
+      <a href="<%= song.url %>">Listen now online</a>
+    <% else %>
+      <span>No link given for <%= song.title %>, sorry</span>
+    <% end %>
+  </div>
+<% end %>
