@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614154310) do
+ActiveRecord::Schema.define(version: 20160614192449) do
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "member_id"
+    t.integer  "song_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "members", force: :cascade do |t|
     t.string   "username"
@@ -26,11 +34,14 @@ ActiveRecord::Schema.define(version: 20160614154310) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "member_id"
   end
 
   create_table "upvotes", force: :cascade do |t|
-    t.integer "member_id"
-    t.integer "song_id"
+    t.integer  "member_id"
+    t.integer  "song_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

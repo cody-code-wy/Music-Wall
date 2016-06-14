@@ -7,7 +7,7 @@ class Upvote < ActiveRecord::Base
   private
   def one_for_member
     match = member.upvotes.any? do |upvote|
-      upvote.song.id == self.song.id
+      upvote.song.id == self.song.id if Song.find_by(id: upvote.song_id)
     end
     if match
       errors.add(:member, "Must not have an upvote for same song.")

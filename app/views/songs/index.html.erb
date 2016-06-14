@@ -2,10 +2,8 @@
   <div class="song">
     <h1><a href="/songs/<%= song.id %>"><%= song.title %></a></h1>
     <h6> By: <%= song.author %> </h6>
-    <% if song.url %>
+    <% unless song.url.nil? || song.url.empty? %>
       <a href="<%= song.url %>">Listen now online</a>
-    <% else %>
-      <span>No link given for <%= song.title %>, sorry</span>
     <% end %>
     <div class="upvote"><%= song.upvotes.count %> Upvotes</div>
   </div>

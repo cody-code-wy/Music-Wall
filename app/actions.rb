@@ -36,7 +36,17 @@ get '/logout' do
 end
 
 post '/submit/upvote' do
-  Song.find(params[:song]).upvotes.create(member: Member.where(username: session[:username])[0])
+  member = Member.where(username: session[:username])[0]
+  status 500 unless member
+  Song.find(params[:song]).upvotes.create(member: member)
+  redirect "/songs/#{params[:song]}"
+end
+
+post '/submit/unvote' do
+  member = Member.where(username: session[:username])[0]
+  song = Song.find(params[:song])
+  status 500 unless member && song
+  member.upvotes.where(song: song).destroy_all
   redirect "/songs/#{params[:song]}"
 end
 get '/submit/song/new' do
@@ -47,13 +57,14 @@ post '/submit/song/new' do
   song = Song.create(
     title: params[:title],
     author: params[:author],
-    url: params[:url]
+    url: params[:url],
+    member: Member.where(username: session[:username])[0]
   )
   redirect "/songs/#{song.id}"
 end
 
 get '/songs' do
-  @songs = Song.all.joins("LEFT JOIN 'upvotes' on upvotes.song_id = songs.id").group("songs.id").order("count(member_id) DESC")
+  @songs = Song.all.joins("LEFT JOIN 'upvotes' on upvotes.song_id = songs.id").group("songs.id").order("count(upvotes.song_id) DESC")
   erb :'songs/index.html'
 end
 

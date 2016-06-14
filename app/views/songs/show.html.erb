@@ -1,17 +1,23 @@
 <div class="@song">
   <h1><%= @song.title %> </h1>
-  <h6> By: <%= @song.author %> </h6>
-  <% if @song.url %>
+  <h4> By: <%= @song.author %> </h4>
+  <h6> Posted by: <%= @song.member ? @song.member.username : "Anonymous" %> </h6>
+  <% unless @song.url.nil? || @song.url.empty? %>
     <a href="<%= @song.url %>">Listen now online</a>
-  <% else %>
-    <span>No link given for <%= @song.title %>, sorry</span>
   <% end %>
   <div><%= @song.upvotes.count %> Upvotes</div>
   <% if session[:username] %>
-    <form method="post" action="/submit/upvote">
-      <input type="hidden" name="song" value="<%=@song.id%>">
-      <input type="submit" value="Upvote">
-    </form>
+    <% unless Member.where(username: session[:username])[0].has_upvote(@song.id) %>
+      <form method="post" action="/submit/upvote">
+        <input type="hidden" name="song" value="<%=@song.id%>">
+        <input type="submit" value="Upvote">
+      </form>
+    <% else %>
+      <form method="post" action="/submit/unvote">
+        <input type="hidden" name="song" value="<%=@song.id%>">
+        <input type="submit" value="Remove Upvote">
+      </form>
+    <% end %>
   <% else %>
     <span>Login to upvote this song</span>
   <% end %>
