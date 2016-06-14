@@ -33,8 +33,11 @@
   </div>
   <div id="navbar">
     <ul>
+      <li><a href="/">Home</a></li>
       <li><a href="/songs">Show songs</a></li>
-      <li><a href="/submit/song/new">Create new song</a></li>
+      <% if session[:username] %>
+        <li><a href="/submit/song/new">Create new song</a></li>
+      <% end %>
     </ul>
   </div>
   <%= yield %>
