@@ -35,6 +35,10 @@ get '/logout' do
   redirect '/'
 end
 
+post '/submit/comment' do
+  redirect '/'
+end
+
 post '/submit/upvote' do
   member = Member.where(username: session[:username])[0]
   status 500 unless member

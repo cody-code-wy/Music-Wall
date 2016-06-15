@@ -18,7 +18,13 @@
         <input type="submit" value="Remove Upvote">
       </form>
     <% end %>
+    <form method="post" action="/sumbit/comment">
+      <input type="hidden" name="song" value="<%=@song.id%>">
+      <textarea rows="4" cols="50" name="content">
+      </textarea>
+      <input type="submit" value="Submit Comment">
+    </form>
   <% else %>
-    <span>Login to upvote this song</span>
+    <span>Login to upvote or comment this song</span>
   <% end %>
 </div>
