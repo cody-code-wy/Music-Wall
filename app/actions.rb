@@ -36,7 +36,11 @@ get '/logout' do
 end
 
 post '/submit/comment' do
-  redirect '/'
+  member = Member.where(username: session[:username])[0]
+  song = Song.find(params[:song])
+  status 500 unless member && song
+  song.comments.create(member: member, content: params[:content])
+  redirect "/songs/#{params[:song]}"
 end
 
 post '/submit/upvote' do
